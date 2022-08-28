@@ -4,10 +4,19 @@ prjRecantoDaVovo/classes/execucao.cs
 
 prjRecantoDaVovo/bin/Debug/*
 
-.vs/prjRecantoDaVovo/v16/.suo
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-prjRecantoDaVovo/obj/Debug/prjRecantoDaVovo.csproj.GenerateResource.cache
-
-prjRecantoDaVovo/obj/Debug/prjRecantoDaVovo.exe
-
-prjRecantoDaVovo/obj/Debug/prjRecantoDaVovo.pdb
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
