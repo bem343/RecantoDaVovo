@@ -34,3 +34,39 @@ D:\Downloads\PROJETOS\Recanto da vovó\RecantoDaVovo\prjRecantoDaVovo\bin\Debug\
 D:\Downloads\PROJETOS\Recanto da vovó\RecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Numerics.Vectors.xml
 D:\Downloads\PROJETOS\Recanto da vovó\RecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\Downloads\PROJETOS\Recanto da vovó\RecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.CopyComplete
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.AssemblyReference.cache
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.Forms.frm_principal.resources
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.Forms.frm_login.resources
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.Properties.Resources.resources
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.GenerateResource.cache
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.CoreCompileInputs.cache
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.exe
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.pdb
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\prjRecantoDaVovo.exe.config
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\prjRecantoDaVovo.exe
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\prjRecantoDaVovo.pdb
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\Google.Protobuf.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\MySql.Data.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\Proffreddy.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Buffers.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Memory.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\ZstdNet.dll
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\BouncyCastle.Crypto.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\Google.Protobuf.pdb
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\Google.Protobuf.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Compression.LZ4.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\K4os.Hash.xxHash.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\MySql.Data.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Buffers.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Memory.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.CopyComplete

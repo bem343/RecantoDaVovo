@@ -97,7 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\banco.cs" />
+    <Compile Include="classes\crianca.cs" />
+    <Compile Include="classes\criancas.cs" />
     <Compile Include="classes\execucao.cs" />
+    <Compile Include="classes\responsavel.cs" />
+    <Compile Include="classes\sexo.cs" />
+    <Compile Include="classes\sexos.cs" />
     <Compile Include="Forms\frm_principal.cs">
       <SubType>Form</SubType>
     </Compile>
