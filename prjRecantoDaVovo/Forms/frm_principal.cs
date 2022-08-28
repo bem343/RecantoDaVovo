@@ -171,6 +171,23 @@ namespace prjRecantoDaVovo.Forms
 					cbSexo.Enabled = false;
 				}
 			}
+			private void cbGestando_CheckedChanged(object sender, EventArgs e)
+			{
+				btnSalvarNovaCrianca.Enabled = true;
+				if (cbGestando.Checked)
+				{
+					txtRoupaCrianca.Enabled = false;
+					txtSapatoCrianca.Enabled = false;
+					dtNascimentoCrianca.Enabled = false;
+					txtNomeCrianca.Focus();
+				}
+				else
+				{
+					txtRoupaCrianca.Enabled = true;
+					txtSapatoCrianca.Enabled = true;
+					dtNascimentoCrianca.Enabled = true;
+				}
+			}
 		#endregion
 
 	}
