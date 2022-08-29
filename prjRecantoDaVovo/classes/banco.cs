@@ -62,7 +62,7 @@ namespace prjRecantoDaVovo.classes
         #endregion
 
         #region Selecionar
-            public bool Selecionar(string nomeSP, string[,] args, ref MySqlDataReader dados)
+            protected bool Selecionar(string nomeSP, string[,] args, ref MySqlDataReader dados)
             {
                 try
                 {
@@ -95,7 +95,7 @@ namespace prjRecantoDaVovo.classes
         #endregion
 
         #region Executar
-            public bool Executar(string nomeSP, string[,] args)
+            protected bool Executar(string nomeSP, string[,] args)
             {
                 try
                 {

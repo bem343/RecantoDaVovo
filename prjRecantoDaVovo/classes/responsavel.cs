@@ -21,13 +21,12 @@ namespace prjRecantoDaVovo.classes
             this.cel = cel;
             this.endereco = endereco;
         }
+		public responsavel(string cpf) : base()
+		{
+			this.cpf = cpf;
+		}
 
-        public responsavel(string nome):base()
-        {
-            this.nome = nome;
-        }
-
-        public bool Verificar()
+		public bool Verificar()
         {
             string nomeSP = "verificaResponsavel";
             MySqlDataReader dados = null;

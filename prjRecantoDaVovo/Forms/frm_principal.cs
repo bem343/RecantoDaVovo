@@ -7,8 +7,10 @@ namespace prjRecantoDaVovo.Forms
 	public partial class frm_principal : Form
     {
 
+		private string cpf = "";
+
 		#region Construtores
-			public frm_principal()
+		public frm_principal()
 			{
 				InitializeComponent();
 			}
@@ -32,17 +34,25 @@ namespace prjRecantoDaVovo.Forms
 				panelCriancas.Visible = true;
 				panelNovaCrianca.Visible = false;
 			}
+			private void erro()
+			{
+				MessageBox.Show("Falha na conexão com o banco.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 			//Botão Consultar
 			private void btnConsultar_Click(object sender, EventArgs e)
 			{
 				//ValidaCpf();
-				if(true) {
+				cpf = txtCpf.Text;
+				responsavel responsavel = new responsavel(cpf);
+				if (!responsavel.Verificar()) {
 
 					// Caso o resonsável não exista
 					if (MessageBox.Show("Deseja cadastrá-lo?", "Responsável não cadastrado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
 						txtCpf.Clear();
 						txtCpf.Focus();
 						return;
+					} else {
+						if(!responsavel.Inserir()) { erro(); }
 					}
 				} else {
 

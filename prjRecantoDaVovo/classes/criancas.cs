@@ -64,7 +64,7 @@ namespace prjRecantoDaVovo.classes
                             string nome_sexo = dados[4].ToString();
 
                             sexo sexo = new sexo(nome_sexo);
-                            responsavel responsavel = new responsavel(nome_responsavel);
+                            responsavel responsavel = new responsavel(null, nome_responsavel, null, null);
                             crianca crianca = new crianca(nome_crianca, responsavel, sapato_crianca, roupa_crianca, sexo);
                             lista.Add(crianca);
                         }
