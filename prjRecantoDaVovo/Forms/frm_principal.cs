@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using prjRecantoDaVovo.classes;
 
 namespace prjRecantoDaVovo.Forms
 {
@@ -38,10 +39,7 @@ namespace prjRecantoDaVovo.Forms
 				if(true) {
 
 					// Caso o resonsável não exista
-					if (MessageBox.Show("deseja cadastrá-lo?", "Responsável não cadastrado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-						mostraViews();
-						txtNome.Focus();
-					} else {
+					if (MessageBox.Show("Deseja cadastrá-lo?", "Responsável não cadastrado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
 						txtCpf.Clear();
 						txtCpf.Focus();
 						return;
@@ -50,13 +48,21 @@ namespace prjRecantoDaVovo.Forms
 
 					// Caso o responsável já exista
 					//carregaInfo();
-					mostraViews();
-					cbCriancas.Focus();
 				}
+				mostraViews();
+				txtNome.Focus();
 			}
 			//Botão Concluir
 			private void btnConcluir_Click(object sender, EventArgs e)
 			{
+				if(btnSalvarCriancas.Enabled | btnSalvarNovaCrianca.Enabled | btnSalvarResponsavel.Enabled)
+				{
+					if(MessageBox.Show("Deseja salvá-las?", "Alterações não salvas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+					{
+						return;
+					}
+				}
+				//Retorna a tela inicial
 				txtCpf.Enabled = true;
 				btnConsultar.Enabled = false;
 				btnConcluir.Visible = false;
@@ -64,12 +70,14 @@ namespace prjRecantoDaVovo.Forms
 				gbResponsavel.Visible = false;
 				txtCpf.Clear(); txtCpf.Focus();
 			}
+
 			//Botão Salvar (dados do responsável)
 			private void btnSalvar_Click(object sender, EventArgs e)
 			{
 				cbEditarInfoResponsavel.Visible = true;
 				btnSalvarResponsavel.Enabled = false;
 				cbEditarInfoResponsavel.Checked = false;
+				cbEditarInfoResponsavel.Enabled = true;
 				txtNome.Enabled = false;
 				txtEndereco.Enabled = false;
 				txtTelefone.Enabled = false;
@@ -82,6 +90,7 @@ namespace prjRecantoDaVovo.Forms
 			{
 				btnSalvarCriancas.Enabled = false;
 				cbEditarInfoCriancas.Checked = false;
+				cbEditarInfoCriancas.Enabled = true;
 				cbCriancas.Focus();
 			}
 			//Botão Salvar (dados de uma nova criança)
@@ -125,10 +134,12 @@ namespace prjRecantoDaVovo.Forms
 			private void txtNome_TextChanged(object sender, EventArgs e)
 			{
 				btnSalvarResponsavel.Enabled = true;
+				cbEditarInfoResponsavel.Enabled = false;
 			}
 			private void txtRoupa_TextChanged(object sender, EventArgs e)
 			{
 				btnSalvarCriancas.Enabled = true;
+				cbEditarInfoCriancas.Enabled = false;
 			}
 			private void txtNomeCrianca_TextChanged(object sender, EventArgs e)
 			{
