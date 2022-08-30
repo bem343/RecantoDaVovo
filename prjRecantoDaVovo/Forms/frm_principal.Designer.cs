@@ -79,6 +79,12 @@ namespace prjRecantoDaVovo.Forms
 			this.pgExportacao = new System.Windows.Forms.ProgressBar();
 			this.gvExportacao = new System.Windows.Forms.DataGridView();
 			this.btnExportar = new System.Windows.Forms.Button();
+			this.colNumCrianca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colNomeCrianca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colNomeResponsavel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colNumRoupa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colNumSapato = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colSexo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tcPrincipal.SuspendLayout();
 			this.tabResponsaveis.SuspendLayout();
 			this.gbCriancas.SuspendLayout();
@@ -597,9 +603,24 @@ namespace prjRecantoDaVovo.Forms
 			// 
 			// gvExportacao
 			// 
+			this.gvExportacao.AllowUserToAddRows = false;
+			this.gvExportacao.AllowUserToDeleteRows = false;
+			this.gvExportacao.AllowUserToResizeColumns = false;
+			this.gvExportacao.AllowUserToResizeRows = false;
+			this.gvExportacao.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.gvExportacao.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gvExportacao.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumCrianca,
+            this.colNomeCrianca,
+            this.colNomeResponsavel,
+            this.colNumRoupa,
+            this.colNumSapato,
+            this.colSexo});
 			this.gvExportacao.Location = new System.Drawing.Point(39, 91);
 			this.gvExportacao.Name = "gvExportacao";
+			this.gvExportacao.ReadOnly = true;
+			this.gvExportacao.RowHeadersVisible = false;
+			this.gvExportacao.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gvExportacao.Size = new System.Drawing.Size(895, 355);
 			this.gvExportacao.TabIndex = 1;
 			this.gvExportacao.TabStop = false;
@@ -611,6 +632,43 @@ namespace prjRecantoDaVovo.Forms
 			this.btnExportar.Size = new System.Drawing.Size(127, 26);
 			this.btnExportar.TabIndex = 0;
 			this.btnExportar.Text = "Exportar lista";
+			this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
+			// 
+			// colNumCrianca
+			// 
+			this.colNumCrianca.HeaderText = "Número";
+			this.colNumCrianca.Name = "colNumCrianca";
+			this.colNumCrianca.ReadOnly = true;
+			// 
+			// colNomeCrianca
+			// 
+			this.colNomeCrianca.HeaderText = "Nome da criança";
+			this.colNomeCrianca.Name = "colNomeCrianca";
+			this.colNomeCrianca.ReadOnly = true;
+			// 
+			// colNomeResponsavel
+			// 
+			this.colNomeResponsavel.HeaderText = "Nome do responsável";
+			this.colNomeResponsavel.Name = "colNomeResponsavel";
+			this.colNomeResponsavel.ReadOnly = true;
+			// 
+			// colNumRoupa
+			// 
+			this.colNumRoupa.HeaderText = "Número da roupa";
+			this.colNumRoupa.Name = "colNumRoupa";
+			this.colNumRoupa.ReadOnly = true;
+			// 
+			// colNumSapato
+			// 
+			this.colNumSapato.HeaderText = "Número do sapato";
+			this.colNumSapato.Name = "colNumSapato";
+			this.colNumSapato.ReadOnly = true;
+			// 
+			// colSexo
+			// 
+			this.colSexo.HeaderText = "Sexo da criança";
+			this.colSexo.Name = "colSexo";
+			this.colSexo.ReadOnly = true;
 			// 
 			// frm_principal
 			// 
@@ -700,6 +758,12 @@ namespace prjRecantoDaVovo.Forms
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox txtRoupa;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNumCrianca;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNomeCrianca;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNomeResponsavel;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNumRoupa;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNumSapato;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colSexo;
 	}
 }
 

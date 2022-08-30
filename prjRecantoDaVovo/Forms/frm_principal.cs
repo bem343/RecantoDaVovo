@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using prjRecantoDaVovo.classes;
+using Proffreddy;
 
 namespace prjRecantoDaVovo.Forms
 {
@@ -230,7 +231,99 @@ namespace prjRecantoDaVovo.Forms
 					dtNascimentoCrianca.Enabled = true;
 				}
 			}
+
+
 		#endregion
 
+		#region Ajusta o tamanho das colunas do Excel
+			private void ajustaTamanho(clsExcel Excel)
+			{
+				Excel.ajustaTamanho("A1", "A1");
+				Excel.ajustaTamanho("B1", "B1");
+				Excel.ajustaTamanho("C1", "C1");
+				Excel.ajustaTamanho("D1", "D1");
+				Excel.ajustaTamanho("E1", "E1");
+				Excel.ajustaTamanho("F1", "F1");
+			}
+		#endregion
+
+		#region Gera o cabeçário do Excel
+			private void geraCabecario(clsExcel Excel)
+			{
+				Excel.Adiciona("A1", "NÚMERO");
+				Excel.Adiciona("B1", "NOME DA CRIANÇA");
+				Excel.Adiciona("C1", "NOME DO RESPONSÁVEL");
+				Excel.Adiciona("D1", "NÚMERO DA ROUPA");
+				Excel.Adiciona("E1", "NÚMERO DO SAPATO");
+				Excel.Adiciona("F1", "SEXO DA CRIANÇA");
+				Excel.Negrito("A1", "F1");
+			}
+		#endregion
+
+		private void btnExportar_Click(object sender, EventArgs e)
+		{
+
+			#region Pergunta de segurança
+				List<crianca> criancas = new criancas().Convidadas();
+				if (MessageBox.Show("Tem certeza que deseja exportar " + criancas.Count + " convidado(s) para um excel?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				{
+					return;
+				}
+			#endregion
+
+			#region Carregando a gridview
+				btnExportar.Enabled = false;
+				pgExportacao.Maximum = criancas.Count * 2;
+				gvExportacao.Rows.Clear(); int n = 1;
+				foreach (crianca crianca in criancas)
+				{
+					pgExportacao.Value++;
+					Application.DoEvents();
+					gvExportacao.Rows.Add(
+						n,
+						crianca.nome,
+						crianca.responsavel.nome,
+						crianca.roupa,
+						crianca.sapato,
+						crianca.sexo.nome
+					);
+				}
+			#endregion
+
+			#region Gera o excel
+				//Forma o Excel
+				clsExcel Excel = new clsExcel();
+				Excel.CriaExcel();
+				Excel.EscolhaPlan(1);
+				geraCabecario(Excel);
+				for (int i = 1; i < gvExportacao.Rows.Count + 1; i++)
+				{
+					pgExportacao.Value++;
+					Application.DoEvents();
+					Excel.Adiciona("A" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[0].Value.ToString());
+					Excel.Adiciona("B" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[1].Value.ToString());
+					Excel.Adiciona("C" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[2].Value.ToString());
+					Excel.Adiciona("D" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[3].Value.ToString());
+					Excel.Adiciona("E" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[4].Value.ToString());
+					Excel.Adiciona("F" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[5].Value.ToString());
+				}
+				ajustaTamanho(Excel);
+				string final = "F" + (gvExportacao.Rows.Count + 1);
+				Excel.Borda("A1", final, "media");
+
+				//Salva o Excel
+				Excel.Salvar("Lista de participação " + DateTime.Now.Year); Excel.Fechar();
+				string mensagem = "Todos os convidados foram exportados! Acesse o arquivo em sua pasta de Dowloads.";
+				MessageBox.Show(mensagem, "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			#endregion
+
+			#region Protocolo de reset
+				gvExportacao.Rows.Clear();
+				btnExportar.Enabled = true;
+				btnExportar.Focus();
+				pgExportacao.Value = 0;
+			#endregion
+
+		}
 	}
 }
