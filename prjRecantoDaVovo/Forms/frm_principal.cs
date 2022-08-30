@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using prjRecantoDaVovo.classes;
 
@@ -7,7 +8,9 @@ namespace prjRecantoDaVovo.Forms
 	public partial class frm_principal : Form
     {
 
-		private string cpf = "";
+		private responsavel responsavel = null;
+		private List<crianca> criancas = null;
+		private crianca crianca = null;
 
 		#region Construtores
 		public frm_principal()
@@ -42,8 +45,7 @@ namespace prjRecantoDaVovo.Forms
 			private void btnConsultar_Click(object sender, EventArgs e)
 			{
 				//ValidaCpf();
-				cpf = txtCpf.Text;
-				responsavel responsavel = new responsavel(cpf);
+				responsavel = new responsavel(txtCpf.Text);
 				if (!responsavel.Verificar()) {
 
 					// Caso o resonsável não exista
@@ -52,12 +54,23 @@ namespace prjRecantoDaVovo.Forms
 						txtCpf.Focus();
 						return;
 					} else {
-						if(!responsavel.Inserir()) { erro(); }
+						if(!responsavel.Inserir()) { erro(); return; }
 					}
 				} else {
 
 					// Caso o responsável já exista
-					//carregaInfo();
+					txtNome.Text = responsavel.nome;
+					txtEndereco.Text = responsavel.endereco;
+					txtTelefone.Text = responsavel.cel;
+
+					criancas = new criancas().Listar(responsavel.cpf);
+
+					for (int i = 0; i < criancas.Count; i++)
+					{
+						DateTime nascimento = criancas[i].nascimento;
+						int t = DateTime.Now.Year - nascimento.Year;
+						cbCriancas.Items.Add(criancas[i].nome + " - " + t + " anos");
+					}
 				}
 				mostraViews();
 				txtNome.Focus();
@@ -84,6 +97,12 @@ namespace prjRecantoDaVovo.Forms
 			//Botão Salvar (dados do responsável)
 			private void btnSalvar_Click(object sender, EventArgs e)
 			{
+				responsavel.cel = txtTelefone.Text;
+				responsavel.endereco = txtEndereco.Text;
+				responsavel.nome = txtNome.Text;
+
+				if(!responsavel.Atualiza()) { erro(); return; }
+				
 				cbEditarInfoResponsavel.Visible = true;
 				btnSalvarResponsavel.Enabled = false;
 				cbEditarInfoResponsavel.Checked = false;
@@ -106,6 +125,8 @@ namespace prjRecantoDaVovo.Forms
 			//Botão Salvar (dados de uma nova criança)
 			private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
 			{
+					
+
 				btnSalvarNovaCrianca.Enabled = false;
 				panelCriancas.Dock = DockStyle.Fill;
 				panelCriancas.Visible = true;

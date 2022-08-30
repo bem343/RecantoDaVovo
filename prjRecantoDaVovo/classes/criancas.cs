@@ -9,7 +9,7 @@ namespace prjRecantoDaVovo.classes
 {
     class criancas : banco
     {
-        private List<crianca> lista = null;
+        private List<crianca> lista = new List<crianca>();
 
         public List<crianca> Listar(string cpf)
         {
@@ -32,7 +32,7 @@ namespace prjRecantoDaVovo.classes
                             string roupa = dados[2].ToString();
                             int sapato = int.Parse(dados[3].ToString());
                             DateTime nascimento = DateTime.Parse(dados[4].ToString());
-                            bool participacao = bool.Parse(dados[5].ToString());
+                            bool participacao = dados[5].ToString() == "1"?true:false;
                             string nome_sexo = dados[6].ToString();
 
                             sexo sexo = new sexo(nome_sexo);
