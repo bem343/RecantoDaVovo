@@ -10,6 +10,7 @@ namespace prjRecantoDaVovo.Forms
 
 		private responsavel responsavel = null;
 		private List<crianca> criancas = null;
+		private List<sexo> sexos = null;
 		private crianca crianca = null;
 
 		#region Construtores
@@ -74,6 +75,13 @@ namespace prjRecantoDaVovo.Forms
 				}
 				mostraViews();
 				txtNome.Focus();
+
+				sexos = new sexos().Listar();
+
+				for (int i = 0; i < sexos.Count - 2; i++)
+				{
+					cbSexo.Items.Add(sexos[i].nome);
+				}
 			}
 			//Botão Concluir
 			private void btnConcluir_Click(object sender, EventArgs e)
@@ -125,8 +133,6 @@ namespace prjRecantoDaVovo.Forms
 			//Botão Salvar (dados de uma nova criança)
 			private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
 			{
-					
-
 				btnSalvarNovaCrianca.Enabled = false;
 				panelCriancas.Dock = DockStyle.Fill;
 				panelCriancas.Visible = true;
@@ -141,6 +147,9 @@ namespace prjRecantoDaVovo.Forms
 				panelNovaCrianca.Visible = true;
 				panelCriancas.Visible = false;
 				cbGestando.Focus();
+				crianca = new crianca();
+
+				if (!crianca.Inserir(txtCpf.Text)) {erro(); return;}
 			}
 		#endregion
 
@@ -230,7 +239,24 @@ namespace prjRecantoDaVovo.Forms
 					dtNascimentoCrianca.Enabled = true;
 				}
 			}
-		#endregion
+        #endregion
 
-	}
+        private void cbCriancas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			panelInfoCrianca.Show();
+
+            for (int i = 0; i < criancas.Count; i++)
+            {
+                if (criancas[i].codigo == cbCriancas.SelectedIndex)
+                {
+                    txtRoupa.Text = criancas[i].roupa;
+                    txtSapato.Value = criancas[i].sapato;
+                    cbSexo.Text = criancas[i].sexo.nome;
+                    dtNascimento.Value = criancas[i].nascimento;
+					break;
+                }
+            }
+		
+        }
+    }
 }
