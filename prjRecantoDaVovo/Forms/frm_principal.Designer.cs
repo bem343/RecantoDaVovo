@@ -151,8 +151,7 @@ namespace prjRecantoDaVovo.Forms
             this.panelNovaCrianca.Controls.Add(this.txtNomeCrianca);
             this.panelNovaCrianca.Controls.Add(this.label14);
             this.panelNovaCrianca.Controls.Add(this.txtRoupaCrianca);
-            this.panelNovaCrianca.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelNovaCrianca.Location = new System.Drawing.Point(3, 22);
+            this.panelNovaCrianca.Location = new System.Drawing.Point(0, 447);
             this.panelNovaCrianca.Name = "panelNovaCrianca";
             this.panelNovaCrianca.Size = new System.Drawing.Size(606, 335);
             this.panelNovaCrianca.TabIndex = 1;

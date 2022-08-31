@@ -10,7 +10,7 @@ namespace prjRecantoDaVovo.Forms
 	{
 
 		private responsavel responsavel = null;
-		private List<crianca> criancas = null;
+		private List<crianca> criancas = new List<crianca>();
 		private List<sexo> sexos = null;
 
 		#region Construtores
@@ -136,6 +136,16 @@ namespace prjRecantoDaVovo.Forms
 			cbEditarInfoCriancas.Checked = false;
 			cbEditarInfoCriancas.Enabled = true;
 			cbCriancas.Focus();
+			//bool participacao = false;
+
+   //         if (cbEditarInfoCriancas.Checked)
+   //         {
+			//	int cd = cbCriancas.SelectedIndex;
+			//	string roupa = txtRoupa.Text;
+			//	int sapato = (int)txtSapato.Value;
+			//	sexo sexo = new sexo(cbSexo.SelectedIndex);
+   //             if (cbParticipacao.Checked) { participacao = true; }
+   //         }
 		}
 		//Botão Salvar (dados de uma nova criança)
 		private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
@@ -149,13 +159,23 @@ namespace prjRecantoDaVovo.Forms
 
 			int cd = criancas.Count;
 			string nome = txtNomeCrianca.Text;
-			string roupa = txtRoupaCrianca.Text;
-			int sapato = (int)txtSapatoCrianca.Value;
-			DateTime nascimento = dtNascimento.Value;
+			crianca crianca = null;
 			sexo sexo = new sexo(cbSexoCrianca.SelectedIndex);
-			crianca crianca = new crianca(cd,nome,roupa,sapato,nascimento,true,sexo);
-            if (!crianca.Atualiza(txtCpf.Text)) { erro(); return; }
 
+			if (!cbGestando.Checked)
+            {
+				string roupa = txtRoupaCrianca.Text;
+				int sapato = (int)txtSapatoCrianca.Value;
+				DateTime nascimento = dtNascimento.Value;
+				crianca = new crianca(cd, nome, roupa, sapato, nascimento, true, sexo);
+			} 
+			else 
+			{
+                if (nome == "") { nome = null; }
+				crianca = new crianca(cd, nome, sexo, true); 
+			}
+			
+            if (!crianca.Atualiza(txtCpf.Text, cbGestando.Checked)) { erro(); return; }
 		}
 		//Botão Nova criança
 		private void btnNovaCrianca_Click(object sender, EventArgs e)
