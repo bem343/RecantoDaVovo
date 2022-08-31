@@ -10,7 +10,7 @@ namespace prjRecantoDaVovo.Forms
 	{
 
 		private responsavel responsavel = null;
-		private List<crianca> criancas = null;
+		private List<crianca> criancas = new List<crianca>();
 		private List<sexo> sexos = null;
 
 		#region Construtores
@@ -21,10 +21,10 @@ namespace prjRecantoDaVovo.Forms
 		#endregion
 
 		#region Fecha a aplicação ao fechar este formulário
-		private void frm_principal_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			Application.Exit();
-		}
+			private void frm_principal_FormClosed(object sender, FormClosedEventArgs e)
+			{
+				Application.Exit();
+			}
 		#endregion
 
 		#region Botões da tela principal
@@ -62,6 +62,8 @@ namespace prjRecantoDaVovo.Forms
 				{
 					if (!responsavel.Inserir()) { erro(); return; }
 				}
+				mostraViews();
+				txtNome.Focus();
 			}
 			else
 			{
@@ -72,6 +74,7 @@ namespace prjRecantoDaVovo.Forms
 				txtTelefone.Text = responsavel.cel;
 
 				criancas = new criancas().Listar(responsavel.cpf);
+				cbCriancas.Items.Clear();
 
 				for (int i = 0; i < criancas.Count; i++)
 				{
@@ -79,15 +82,26 @@ namespace prjRecantoDaVovo.Forms
 					int t = DateTime.Now.Year - nascimento.Year;
 					cbCriancas.Items.Add(criancas[i].nome + " - " + t + " anos");
 				}
-			}
-			mostraViews();
-			txtNome.Focus();
 
-			sexos = new sexos().Listar();
+				responsavel.cel = txtTelefone.Text;
+				responsavel.endereco = txtEndereco.Text;
+				responsavel.nome = txtNome.Text;
 
-			for (int i = 0; i < sexos.Count; i++)
-			{
-				cbSexo.Items.Add(sexos[i].nome);
+				cbEditarInfoResponsavel.Visible = true;
+				btnSalvarResponsavel.Enabled = false;
+				cbEditarInfoResponsavel.Checked = false;
+				cbEditarInfoResponsavel.Enabled = true;
+				panelInfoCrianca.Visible = true;
+				txtNome.Enabled = false;
+				txtEndereco.Enabled = false;
+				txtTelefone.Enabled = false;
+				btnNovaCrianca.Enabled = true;
+				cbCriancas.Enabled = true;
+				cbCriancas.Focus();
+
+				mostraViews();
+				if(criancas.Count > 0) { cbCriancas.SelectedIndex = 0; }
+				cbCriancas.Focus();
 			}
 		}
 		//Botão Concluir
@@ -164,12 +178,6 @@ namespace prjRecantoDaVovo.Forms
 			panelNovaCrianca.Visible = true;
 			panelCriancas.Visible = false;
 			cbGestando.Focus();
-
-			sexos = new sexos().Listar();
-            for (int i = 0; i < sexos.Count; i++)
-            {
-				cbSexoCrianca.Items.Add(sexos[i].nome);
-			}
 			
 			crianca crianca = new crianca();
 			if (!crianca.Inserir(txtCpf.Text)) { erro(); return; }
@@ -178,10 +186,10 @@ namespace prjRecantoDaVovo.Forms
 		#endregion
 
 		#region Da foco ao campo 'CPF do responsável' após carregar janela
-		private void frm_principal_Activated(object sender, EventArgs e)
-		{
-			txtCpf.Focus();
-		}
+			private void frm_principal_Shown(object sender, EventArgs e)
+			{
+				txtCpf.Focus();
+			}
 		#endregion
 
 		#region Habilita o botão 'Consultar' após digitar os onze números do CPF
@@ -195,20 +203,23 @@ namespace prjRecantoDaVovo.Forms
 		#endregion
 
 		#region Habilita o botão 'salvar' após fazer uma alteração em algum campo
-		private void txtNome_TextChanged(object sender, EventArgs e)
-		{
-			btnSalvarResponsavel.Enabled = true;
-			cbEditarInfoResponsavel.Enabled = false;
-		}
-		private void txtRoupa_TextChanged(object sender, EventArgs e)
-		{
-			btnSalvarCriancas.Enabled = true;
-			cbEditarInfoCriancas.Enabled = false;
-		}
-		private void txtNomeCrianca_TextChanged(object sender, EventArgs e)
-		{
-			btnSalvarNovaCrianca.Enabled = true;
-		}
+			private void txtNome_TextChanged(object sender, EventArgs e)
+			{
+				btnSalvarResponsavel.Enabled = true;
+				cbEditarInfoResponsavel.Enabled = false;
+			}
+			private void txtRoupa_TextChanged(object sender, EventArgs e)
+			{
+				if(cbEditarInfoCriancas.Checked)
+				{
+					btnSalvarCriancas.Enabled = true;
+					cbEditarInfoCriancas.Enabled = false;
+				}
+			}
+			private void txtNomeCrianca_TextChanged(object sender, EventArgs e)
+			{
+				btnSalvarNovaCrianca.Enabled = true;
+			}
 		#endregion
 
 		#region Habilita/Desabilita os campos com a opção 'Editar informações'
@@ -295,89 +306,105 @@ namespace prjRecantoDaVovo.Forms
 		#endregion
 
 		#region Realiza a exportação do excel
-		private void btnExportar_Click(object sender, EventArgs e)
-		{
-
-			#region Pergunta de segurança
-			List<crianca> criancas = new criancas().Convidadas();
-			if(criancas.Count == 0)
+			private void btnExportar_Click(object sender, EventArgs e)
 			{
-				MessageBox.Show("Não há nenhum convidado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return;
+
+				#region Pergunta de segurança
+				List<crianca> criancas = new criancas().Convidadas();
+				if(criancas.Count == 0)
+				{
+					MessageBox.Show("Não há nenhum convidado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					return;
+				}
+				if (MessageBox.Show("Tem certeza que deseja exportar " + criancas.Count + " convidado(s) para um excel?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				{
+					return;
+				}
+				#endregion
+
+				#region Carregando a gridview
+				btnExportar.Enabled = false;
+				pgExportacao.Maximum = criancas.Count * 2;
+				gvExportacao.Rows.Clear(); int n = 1;
+				foreach (crianca crianca in criancas)
+				{
+					pgExportacao.Value++;
+					Application.DoEvents();
+					gvExportacao.Rows.Add(
+						n,
+						crianca.nome,
+						crianca.responsavel.nome,
+						crianca.roupa,
+						crianca.sapato,
+						crianca.sexo.nome
+					); n++;
+				}
+				#endregion
+
+				#region Gera o excel
+				//Forma o Excel
+				clsExcel Excel = new clsExcel();
+				Excel.CriaExcel();
+				Excel.EscolhaPlan(1);
+				geraCabecario(Excel);
+				for (int i = 1; i < gvExportacao.Rows.Count + 1; i++)
+				{
+					pgExportacao.Value++;
+					Application.DoEvents();
+					Excel.Adiciona("A" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[0].Value.ToString());
+					Excel.Adiciona("B" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[1].Value.ToString());
+					Excel.Adiciona("C" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[2].Value.ToString());
+					Excel.Adiciona("D" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[3].Value.ToString());
+					Excel.Adiciona("E" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[4].Value.ToString());
+					Excel.Adiciona("F" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[5].Value.ToString());
+				}
+				ajustaTamanho(Excel);
+				string final = "F" + (gvExportacao.Rows.Count + 1);
+				Excel.Borda("A1", final, "media");
+
+				//Salva o Excel
+				Excel.Salvar("Lista de participação " + DateTime.Now.Year); Excel.Fechar();
+				string mensagem = "Todos os convidados foram exportados! Acesse o arquivo em sua pasta de Dowloads.";
+				MessageBox.Show(mensagem, "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				#endregion
+
+				#region Protocolo de reset
+				gvExportacao.Rows.Clear();
+				btnExportar.Enabled = true;
+				btnExportar.Focus();
+				pgExportacao.Value = 0;
+				#endregion
+
 			}
-			if (MessageBox.Show("Tem certeza que deseja exportar " + criancas.Count + " convidado(s) para um excel?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-			{
-				return;
-			}
-			#endregion
-
-			#region Carregando a gridview
-			btnExportar.Enabled = false;
-			pgExportacao.Maximum = criancas.Count * 2;
-			gvExportacao.Rows.Clear(); int n = 1;
-			foreach (crianca crianca in criancas)
-			{
-				pgExportacao.Value++;
-				Application.DoEvents();
-				gvExportacao.Rows.Add(
-					n,
-					crianca.nome,
-					crianca.responsavel.nome,
-					crianca.roupa,
-					crianca.sapato,
-					crianca.sexo.nome
-				); n++;
-			}
-			#endregion
-
-			#region Gera o excel
-			//Forma o Excel
-			clsExcel Excel = new clsExcel();
-			Excel.CriaExcel();
-			Excel.EscolhaPlan(1);
-			geraCabecario(Excel);
-			for (int i = 1; i < gvExportacao.Rows.Count + 1; i++)
-			{
-				pgExportacao.Value++;
-				Application.DoEvents();
-				Excel.Adiciona("A" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[0].Value.ToString());
-				Excel.Adiciona("B" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[1].Value.ToString());
-				Excel.Adiciona("C" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[2].Value.ToString());
-				Excel.Adiciona("D" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[3].Value.ToString());
-				Excel.Adiciona("E" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[4].Value.ToString());
-				Excel.Adiciona("F" + (i + 1), gvExportacao.Rows[(i - 1)].Cells[5].Value.ToString());
-			}
-			ajustaTamanho(Excel);
-			string final = "F" + (gvExportacao.Rows.Count + 1);
-			Excel.Borda("A1", final, "media");
-
-			//Salva o Excel
-			Excel.Salvar("Lista de participação " + DateTime.Now.Year); Excel.Fechar();
-			string mensagem = "Todos os convidados foram exportados! Acesse o arquivo em sua pasta de Dowloads.";
-			MessageBox.Show(mensagem, "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-			#endregion
-
-			#region Protocolo de reset
-			gvExportacao.Rows.Clear();
-			btnExportar.Enabled = true;
-			btnExportar.Focus();
-			pgExportacao.Value = 0;
-			#endregion
-
-		}
 		#endregion
 
 		#region Carrega as crianças de um responsável
 			private void cbCriancas_SelectedIndexChanged(object sender, EventArgs e)
 			{
-				panelInfoCrianca.Visible = true;
-				cbEditarInfoCriancas.Enabled = true;
 				txtRoupa.Text = criancas[cbCriancas.SelectedIndex].roupa;
 				txtSapato.Value = criancas[cbCriancas.SelectedIndex].sapato;
 				cbSexo.Text = criancas[cbCriancas.SelectedIndex].sexo.nome;
 				dtNascimento.Value = criancas[cbCriancas.SelectedIndex].nascimento;
+				cbEditarInfoCriancas.Enabled = true;
+				panelInfoCrianca.Visible = true;
 			}
 		#endregion
 
+		private void frm_principal_Load(object sender, EventArgs e)
+		{
+			sexos = new sexos().Listar();
+			cbSexo.Items.Clear();
+			for (int i = 0; i < sexos.Count; i++)
+			{
+				cbSexo.Items.Add(sexos[i].nome);
+			}
+
+			sexos = new sexos().Listar();
+			cbSexoCrianca.Items.Clear();
+			for (int i = 0; i < sexos.Count; i++)
+			{
+				cbSexoCrianca.Items.Add(sexos[i].nome);
+			}
+		}
 	}
 }
