@@ -12,7 +12,6 @@ namespace prjRecantoDaVovo.Forms
 		private responsavel responsavel = null;
 		private List<crianca> criancas = null;
 		private List<sexo> sexos = null;
-		private crianca crianca = null;
 
 		#region Construtores
 		public frm_principal()
@@ -147,6 +146,16 @@ namespace prjRecantoDaVovo.Forms
 			panelInfoCrianca.Visible = true;
 			panelNovaCrianca.Visible = false;
 			cbCriancas.Focus();
+
+			int cd = criancas.Count;
+			string nome = txtNomeCrianca.Text;
+			string roupa = txtRoupaCrianca.Text;
+			int sapato = (int)txtSapatoCrianca.Value;
+			DateTime nascimento = dtNascimento.Value;
+			sexo sexo = new sexo(cbSexoCrianca.SelectedIndex);
+			crianca crianca = new crianca(cd,nome,roupa,sapato,nascimento,true,sexo);
+            if (!crianca.Atualiza(txtCpf.Text)) { erro(); return; }
+
 		}
 		//Botão Nova criança
 		private void btnNovaCrianca_Click(object sender, EventArgs e)
@@ -155,9 +164,16 @@ namespace prjRecantoDaVovo.Forms
 			panelNovaCrianca.Visible = true;
 			panelCriancas.Visible = false;
 			cbGestando.Focus();
-			crianca = new crianca();
 
+			sexos = new sexos().Listar();
+            for (int i = 0; i < sexos.Count; i++)
+            {
+				cbSexoCrianca.Items.Add(sexos[i].nome);
+			}
+			
+			crianca crianca = new crianca();
 			if (!crianca.Inserir(txtCpf.Text)) { erro(); return; }
+			criancas.Add(crianca);
 		}
 		#endregion
 

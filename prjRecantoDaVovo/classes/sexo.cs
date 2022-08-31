@@ -21,5 +21,10 @@ namespace prjRecantoDaVovo.classes
         {
             this.nome = nome;
         }
+
+        public sexo(int codigo):base()
+        {
+            this.codigo = codigo;
+        }
     }
 }

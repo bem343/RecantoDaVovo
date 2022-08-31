@@ -30,7 +30,9 @@ namespace prjRecantoDaVovo.classes
                         }
                     }
                 }
-            } return lista;
+            }
+            fechaDados(dados);
+            fechaConexao(); return lista;
         }
     }
 }

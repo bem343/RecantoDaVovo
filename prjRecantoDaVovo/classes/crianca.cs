@@ -37,6 +37,11 @@ namespace prjRecantoDaVovo.classes
             this.sexo = sexo;
         }
 
+        public crianca(int codigo):base()
+        {
+            this.codigo = codigo;
+        }
+
         public crianca():base()
         { }
 
@@ -63,17 +68,36 @@ namespace prjRecantoDaVovo.classes
             args[2, 0] = "vSapato";
             args[2, 1] = this.sapato.ToString();
             args[3, 0] = "vNascimento";
-            args[3, 1] = this.nascimento.ToLongDateString();
+            args[3, 1] = dataFormatada();
             args[4, 0] = "vParticipacao";
-            args[4, 1] = this.participacao.ToString();
+            args[4, 1] = this.participacao == true?"1":"0";
             args[5, 0] = "vSexo";
-            args[5, 1] = this.sexo.ToString();
+            args[5, 1] = this.sexo.codigo.ToString();
             args[6, 0] = "vCodigo";
             args[6, 1] = this.codigo.ToString();
             args[7, 0] = "vCpf";
             args[7, 1] = cpf;
 
             return Executar(nomeSP, args);
+        }
+
+        private string dataFormatada()
+        {
+            int dia = this.nascimento.Day;
+            int mes = this.nascimento.Month;
+            int ano = this.nascimento.Year;
+            
+            string penis = ano + "-";
+
+            if (mes <= 9)
+            { penis += "0" + mes + "-"; }
+            else { penis += mes + "-"; }
+
+            if (dia <= 9)
+            { penis += "0" + dia; }
+            else { penis += dia; }
+            
+            return penis;
         }
     }
 

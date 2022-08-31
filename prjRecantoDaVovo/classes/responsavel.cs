@@ -44,10 +44,14 @@ namespace prjRecantoDaVovo.classes
                             this.nome = dados[0].ToString();
                             this.cel = dados[1].ToString();
                             this.endereco = dados[2].ToString();
-                        } return true;
+                        }
+                        fechaDados(dados);
+                        fechaConexao(); return true;
                     } 
                 }
-            } return false;
+            }
+            fechaDados(dados);
+            fechaConexao(); return false;
         }
 
         public bool Inserir()

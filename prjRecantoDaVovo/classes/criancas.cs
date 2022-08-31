@@ -41,7 +41,9 @@ namespace prjRecantoDaVovo.classes
                         } 
                     }
                 }
-            }return lista;
+            }
+            fechaDados(dados);
+            fechaConexao(); return lista;
         }
 
         public List<crianca> Convidadas()
@@ -70,7 +72,9 @@ namespace prjRecantoDaVovo.classes
                         }
                     }
                 }
-            } return lista;
+            }
+            fechaDados(dados);
+            fechaConexao(); return lista;
         }
     }
 }
