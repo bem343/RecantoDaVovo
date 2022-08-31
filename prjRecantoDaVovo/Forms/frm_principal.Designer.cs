@@ -78,13 +78,13 @@ namespace prjRecantoDaVovo.Forms
 			this.tabExportacao = new System.Windows.Forms.TabPage();
 			this.pgExportacao = new System.Windows.Forms.ProgressBar();
 			this.gvExportacao = new System.Windows.Forms.DataGridView();
-			this.btnExportar = new System.Windows.Forms.Button();
 			this.colNumCrianca = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colNomeCrianca = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colNomeResponsavel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colNumRoupa = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colNumSapato = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colSexo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.btnExportar = new System.Windows.Forms.Button();
 			this.tcPrincipal.SuspendLayout();
 			this.tabResponsaveis.SuspendLayout();
 			this.gbCriancas.SuspendLayout();
@@ -361,9 +361,6 @@ namespace prjRecantoDaVovo.Forms
 			// 
 			this.cbSexo.Enabled = false;
 			this.cbSexo.FormattingEnabled = true;
-			this.cbSexo.Items.AddRange(new object[] {
-            "Masculino",
-            "Feminino"});
 			this.cbSexo.Location = new System.Drawing.Point(209, 101);
 			this.cbSexo.Name = "cbSexo";
 			this.cbSexo.Size = new System.Drawing.Size(165, 26);
@@ -434,6 +431,7 @@ namespace prjRecantoDaVovo.Forms
 			this.cbCriancas.Name = "cbCriancas";
 			this.cbCriancas.Size = new System.Drawing.Size(414, 26);
 			this.cbCriancas.TabIndex = 0;
+			this.cbCriancas.SelectedIndexChanged += new System.EventHandler(this.cbCriancas_SelectedIndexChanged);
 			// 
 			// label5
 			// 
@@ -625,15 +623,6 @@ namespace prjRecantoDaVovo.Forms
 			this.gvExportacao.TabIndex = 1;
 			this.gvExportacao.TabStop = false;
 			// 
-			// btnExportar
-			// 
-			this.btnExportar.Location = new System.Drawing.Point(39, 59);
-			this.btnExportar.Name = "btnExportar";
-			this.btnExportar.Size = new System.Drawing.Size(127, 26);
-			this.btnExportar.TabIndex = 0;
-			this.btnExportar.Text = "Exportar lista";
-			this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
-			// 
 			// colNumCrianca
 			// 
 			this.colNumCrianca.HeaderText = "Número";
@@ -669,6 +658,15 @@ namespace prjRecantoDaVovo.Forms
 			this.colSexo.HeaderText = "Sexo da criança";
 			this.colSexo.Name = "colSexo";
 			this.colSexo.ReadOnly = true;
+			// 
+			// btnExportar
+			// 
+			this.btnExportar.Location = new System.Drawing.Point(39, 59);
+			this.btnExportar.Name = "btnExportar";
+			this.btnExportar.Size = new System.Drawing.Size(127, 26);
+			this.btnExportar.TabIndex = 0;
+			this.btnExportar.Text = "Exportar lista";
+			this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
 			// 
 			// frm_principal
 			// 

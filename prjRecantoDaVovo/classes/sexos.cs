@@ -9,7 +9,7 @@ namespace prjRecantoDaVovo.classes
 {
     class sexos : banco
     {
-        private List<sexo> lista = null;
+        private List<sexo> lista = new List<sexo>();
 
         public List<sexo> Listar()
         {

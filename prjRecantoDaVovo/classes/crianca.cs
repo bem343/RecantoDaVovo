@@ -28,7 +28,7 @@ namespace prjRecantoDaVovo.classes
             this.sexo = sexo;
         }
 
-        public crianca(string nome, responsavel responsavel, int sapato, string roupa, sexo sexo)
+        public crianca(string nome, responsavel responsavel, int sapato, string roupa, sexo sexo):base()
         {
             this.nome = nome;
             this.responsavel = responsavel;
@@ -36,6 +36,9 @@ namespace prjRecantoDaVovo.classes
             this.roupa = roupa;
             this.sexo = sexo;
         }
+
+        public crianca():base()
+        { }
 
         public bool Inserir(string cpf)
         {
