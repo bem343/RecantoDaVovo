@@ -83,10 +83,6 @@ namespace prjRecantoDaVovo.Forms
 					cbCriancas.Items.Add(criancas[i].nome + " - " + t + " anos");
 				}
 
-				responsavel.cel = txtTelefone.Text;
-				responsavel.endereco = txtEndereco.Text;
-				responsavel.nome = txtNome.Text;
-
 				cbEditarInfoResponsavel.Visible = true;
 				btnSalvarResponsavel.Enabled = false;
 				cbEditarInfoResponsavel.Checked = false;
@@ -154,22 +150,27 @@ namespace prjRecantoDaVovo.Forms
 		//Botão Salvar (dados de uma nova criança)
 		private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
 		{
-			btnSalvarNovaCrianca.Enabled = false;
-			panelCriancas.Dock = DockStyle.Fill;
-			panelCriancas.Visible = true;
-			panelInfoCrianca.Visible = true;
-			panelNovaCrianca.Visible = false;
-			cbCriancas.Focus();
-
 			int cd = criancas.Count;
 			string nome = txtNomeCrianca.Text;
 			string roupa = txtRoupaCrianca.Text;
 			int sapato = (int)txtSapatoCrianca.Value;
 			DateTime nascimento = dtNascimento.Value;
-			sexo sexo = new sexo(cbSexoCrianca.SelectedIndex);
+			sexo sexo = new sexo(cbSexoCrianca.SelectedIndex, cbSexoCrianca.SelectedItem.ToString());
 			crianca crianca = new crianca(cd,nome,roupa,sapato,nascimento,true,sexo);
             if (!crianca.Atualiza(txtCpf.Text)) { erro(); return; }
 
+			criancas.Add(crianca);
+			int t = DateTime.Now.Year - crianca.nascimento.Year;
+			cbCriancas.Items.Add(crianca.nome + " - " + t + " anos");
+
+			btnSalvarNovaCrianca.Enabled = false;
+			panelCriancas.Dock = DockStyle.Fill;
+			panelCriancas.Visible = true;
+			panelInfoCrianca.Visible = true;
+			panelNovaCrianca.Visible = false;
+
+			cbCriancas.SelectedIndex = crianca.codigo - 1;
+			cbCriancas.Focus();
 		}
 		//Botão Nova criança
 		private void btnNovaCrianca_Click(object sender, EventArgs e)
@@ -390,21 +391,24 @@ namespace prjRecantoDaVovo.Forms
 			}
 		#endregion
 
-		private void frm_principal_Load(object sender, EventArgs e)
-		{
-			sexos = new sexos().Listar();
-			cbSexo.Items.Clear();
-			for (int i = 0; i < sexos.Count; i++)
+		#region Carrega as comboBox 'sexo' ao carregar o forms
+			private void frm_principal_Load(object sender, EventArgs e)
 			{
-				cbSexo.Items.Add(sexos[i].nome);
-			}
+				sexos = new sexos().Listar();
+				cbSexo.Items.Clear();
+				for (int i = 0; i < sexos.Count; i++)
+				{
+					cbSexo.Items.Add(sexos[i].nome);
+				}
 
-			sexos = new sexos().Listar();
-			cbSexoCrianca.Items.Clear();
-			for (int i = 0; i < sexos.Count; i++)
-			{
-				cbSexoCrianca.Items.Add(sexos[i].nome);
+				sexos = new sexos().Listar();
+				cbSexoCrianca.Items.Clear();
+				for (int i = 0; i < sexos.Count; i++)
+				{
+					cbSexoCrianca.Items.Add(sexos[i].nome);
+				}
 			}
-		}
+		#endregion
+
 	}
 }
