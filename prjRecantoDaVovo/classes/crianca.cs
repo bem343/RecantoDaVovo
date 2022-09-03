@@ -41,7 +41,13 @@ namespace prjRecantoDaVovo.classes
         {
             this.codigo = codigo;
         }
-
+        public crianca(int codigo, string nome, sexo sexo, bool participacao) : base()
+        {
+            this.codigo = codigo;
+            this.nome = nome;
+            this.sexo = sexo;
+            this.participacao = participacao;
+        }
         public crianca():base()
         { }
 
@@ -56,23 +62,36 @@ namespace prjRecantoDaVovo.classes
             return Executar(nomeSP, args);
         }
 
-        public bool Atualiza(string cpf)
+        public bool Atualiza(string cpf, bool gestacao)
         {
             string nomeSP = "atualizaCrianca";
             string[,] args = new string[8,2];
 
             args[0, 0] = "vNome";
             args[0, 1] = this.nome;
-            args[1, 0] = "vRoupa";
-            args[1, 1] = this.roupa;
-            args[2, 0] = "vSapato";
-            args[2, 1] = this.sapato.ToString();
-            args[3, 0] = "vNascimento";
-            args[3, 1] = dataFormatada();
+            if (gestacao)
+            {
+                args[1, 0] = "vRoupa";
+                args[1, 1] = null;
+                args[2, 0] = "vSapato";
+                args[2, 1] = null;
+                args[3, 0] = "vNascimento";
+                args[3, 1] = null;
+            }
+            else
+            {
+                args[1, 0] = "vRoupa";
+                args[1, 1] = this.roupa;
+                args[2, 0] = "vSapato";
+                args[2, 1] = this.sapato.ToString();
+                args[3, 0] = "vNascimento";
+                args[3, 1] = dataFormatada();
+            }
             args[4, 0] = "vParticipacao";
-            args[4, 1] = this.participacao == true?"1":"0";
+            args[4, 1] = this.participacao == true ? "1" : "0";
             args[5, 0] = "vSexo";
-            args[5, 1] = this.sexo.codigo.ToString();
+            if (this.sexo.codigo < 0) { args[5, 1] = null; }
+            else { args[5, 1] = this.sexo.codigo.ToString(); }
             args[6, 0] = "vCodigo";
             args[6, 1] = this.codigo.ToString();
             args[7, 0] = "vCpf";
