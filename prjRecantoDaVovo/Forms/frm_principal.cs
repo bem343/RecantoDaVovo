@@ -78,9 +78,7 @@ namespace prjRecantoDaVovo.Forms
 
 				for (int i = 0; i < criancas.Count; i++)
 				{
-					DateTime nascimento = criancas[i].nascimento;
-					int t = DateTime.Now.Year - nascimento.Year;
-					cbCriancas.Items.Add(criancas[i].nome + " - " + t + " anos");
+					InserirCrianca(i);
 				}
 
 				cbEditarInfoResponsavel.Visible = true;
@@ -160,36 +158,26 @@ namespace prjRecantoDaVovo.Forms
 		//Botão Salvar (dados de uma nova criança)
 		private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
 		{
-			btnSalvarNovaCrianca.Enabled = false;
-			panelCriancas.Dock = DockStyle.Fill;
-			panelCriancas.Visible = true;
-			panelInfoCrianca.Visible = true;
-			panelNovaCrianca.Visible = false;
-			cbCriancas.Focus();
-
 			int cd = criancas.Count;
 			string nome = txtNomeCrianca.Text;
-			crianca crianca = null;
 			sexo sexo = new sexo(cbSexoCrianca.SelectedIndex);
 
 			if (!cbGestando.Checked)
             {
 				string roupa = txtRoupaCrianca.Text;
 				int sapato = (int)txtSapatoCrianca.Value;
-				DateTime nascimento = dtNascimento.Value;
-				crianca = new crianca(cd, nome, roupa, sapato, nascimento, true, sexo);
+				DateTime nascimento = dtNascimentoCrianca.Value;
+				criancas[cd - 1] = new crianca(cd, nome, roupa, sapato, nascimento, true, sexo);
 			} 
 			else 
 			{
                 if (nome == "") { nome = null; }
-				crianca = new crianca(cd, nome, sexo, true); 
+				criancas[cd - 1] = new crianca(cd, nome, sexo, true); 
 			}
 			
-            if (!crianca.Atualiza(txtCpf.Text, cbGestando.Checked)) { erro(); return; }
+            if (!criancas[cd - 1].Atualiza(txtCpf.Text, cbGestando.Checked)) { erro(); return; }
 
-			criancas.Add(crianca);
-			int t = DateTime.Now.Year - crianca.nascimento.Year;
-			cbCriancas.Items.Add(crianca.nome + " - " + t + " anos");
+			InserirCrianca(cd-1);
 
 			btnSalvarNovaCrianca.Enabled = false;
 			panelCriancas.Dock = DockStyle.Fill;
@@ -197,7 +185,7 @@ namespace prjRecantoDaVovo.Forms
 			panelInfoCrianca.Visible = true;
 			panelNovaCrianca.Visible = false;
 
-			cbCriancas.SelectedIndex = crianca.codigo - 1;
+			cbCriancas.SelectedIndex = cd-1;
 			cbCriancas.Focus();
 		}
 		//Botão Nova criança
@@ -213,6 +201,14 @@ namespace prjRecantoDaVovo.Forms
 			criancas.Add(crianca);
 		}
 		#endregion
+
+		private void InserirCrianca(int cd)
+        {
+			int t = DateTime.Now.Year - criancas[cd].nascimento.Year;
+			string n = criancas[cd].nome;
+			if (n == null) { n = "Gestando Criança " + criancas.Count; t = 0; }
+			cbCriancas.Items.Add(n + " - " + t + " anos");
+		}
 
 		#region Da foco ao campo 'CPF do responsável' após carregar janela
 			private void frm_principal_Shown(object sender, EventArgs e)
@@ -412,8 +408,11 @@ namespace prjRecantoDaVovo.Forms
 			{
 				txtRoupa.Text = criancas[cbCriancas.SelectedIndex].roupa;
 				txtSapato.Value = criancas[cbCriancas.SelectedIndex].sapato;
-				cbSexo.Text = criancas[cbCriancas.SelectedIndex].sexo.nome;
-				dtNascimento.Value = criancas[cbCriancas.SelectedIndex].nascimento;
+				cbSexo.SelectedIndex = criancas[cbCriancas.SelectedIndex].sexo.codigo;
+				if (criancas[cbCriancas.SelectedIndex].nascimento.ToShortDateString() != "01/01/0001")
+				{
+					dtNascimento.Value = criancas[cbCriancas.SelectedIndex].nascimento;
+				}else { dtNascimento.Value = dtNascimento.MaxDate; }
 				cbEditarInfoCriancas.Enabled = true;
 				panelInfoCrianca.Visible = true;
 			}

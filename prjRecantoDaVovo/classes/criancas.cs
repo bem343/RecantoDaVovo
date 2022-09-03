@@ -28,13 +28,18 @@ namespace prjRecantoDaVovo.classes
                         while (dados.Read())
                         {
                             int codigo = int.Parse(dados[0].ToString());
-                            string nome = dados[1].ToString();
-                            string roupa = dados[2].ToString();
-                            int sapato = int.Parse(dados[3].ToString());
-                            DateTime nascimento = DateTime.Parse(dados[4].ToString());
-                            bool participacao = dados[5].ToString() == "1"?true:false;
-                            string nome_sexo = dados[6].ToString();
+                            string nome = null;
+                            string roupa = null;
+                            int sapato = 0;
+                            DateTime nascimento = DateTime.Parse("01/01/0001");
+                            string nome_sexo = null;
 
+                            if (dados[1].ToString() != "") { nome = dados[1].ToString(); }                         
+                            if (dados[2].ToString() != "") { roupa = dados[2].ToString(); }                            
+                            if (dados[3].ToString() != "") { sapato = int.Parse(dados[3].ToString()); }                            
+                            if (dados[4].ToString() != "") { nascimento = DateTime.Parse(dados[4].ToString()); }
+                            bool participacao = dados[5].ToString() == "1"?true:false;                            
+                            if (dados[6].ToString() != "") { nome_sexo = dados[6].ToString(); }
                             sexo sexo = new sexo(nome_sexo);
                             crianca crianca = new crianca(codigo, nome, roupa, sapato, nascimento, participacao, sexo);
                             lista.Add(crianca);
