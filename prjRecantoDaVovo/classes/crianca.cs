@@ -48,6 +48,7 @@ namespace prjRecantoDaVovo.classes
             this.sexo = sexo;
             this.participacao = participacao;
         }
+
         public crianca():base()
         { }
 

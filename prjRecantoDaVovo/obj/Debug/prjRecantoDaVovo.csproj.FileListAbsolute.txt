@@ -70,3 +70,4 @@ C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Memor
 C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.csproj.CopyComplete
+C:\Users\felipe\Desktop\prjRecantoDaVovo\prjRecantoDaVovo\obj\Debug\prjRecantoDaVovo.Forms.IP.resources

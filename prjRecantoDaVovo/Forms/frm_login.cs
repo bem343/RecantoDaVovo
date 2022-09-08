@@ -55,6 +55,17 @@ namespace prjRecantoDaVovo.Forms
 				else
 					btnEntrar.Enabled = false;
 			}
-		#endregion
-	}
+        #endregion
+
+        private void btnFormIP_Click(object sender, EventArgs e)
+        {
+			IP ip = new IP();
+			ip.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

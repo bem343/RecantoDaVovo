@@ -61,6 +61,16 @@ namespace prjRecantoDaVovo.Forms
 				else
 				{
 					if (!responsavel.Inserir()) { erro(); return; }
+					cbEditarInfoResponsavel.Visible = false;
+					btnSalvarResponsavel.Enabled = true;
+					cbEditarInfoResponsavel.Checked = true;
+					cbEditarInfoResponsavel.Enabled = false;
+					panelInfoCrianca.Visible = false;
+					txtNome.Enabled = true;
+					txtEndereco.Enabled = true;
+					txtTelefone.Enabled = true;
+					btnNovaCrianca.Enabled = false;
+					cbCriancas.Enabled = false;
 				}
 				mostraViews();
 				txtNome.Focus();
@@ -114,6 +124,16 @@ namespace prjRecantoDaVovo.Forms
 			btnConcluir.Visible = false;
 			gbCriancas.Visible = false;
 			gbResponsavel.Visible = false;
+			txtNome.Clear();
+			txtEndereco.Clear();
+			txtTelefone.Clear();
+			txtSapato.Value = 0;
+			txtRoupa.Clear();
+			dtNascimento.Value = DateTime.Today;
+			cbCriancas.Items.Clear();
+			criancas.Clear();
+			cbCriancas.Text = "";
+			cbSexo.SelectedIndex = -1;
 			txtCpf.Clear(); txtCpf.Focus();
 		}
 
@@ -144,19 +164,19 @@ namespace prjRecantoDaVovo.Forms
 			cbEditarInfoCriancas.Checked = false;
 			cbEditarInfoCriancas.Enabled = true;
 			cbCriancas.Focus();
-			//bool participacao = false;
-
-   //         if (cbEditarInfoCriancas.Checked)
-   //         {
-			//	int cd = cbCriancas.SelectedIndex;
-			//	string roupa = txtRoupa.Text;
-			//	int sapato = (int)txtSapato.Value;
-			//	sexo sexo = new sexo(cbSexo.SelectedIndex);
-   //             if (cbParticipacao.Checked) { participacao = true; }
-   //         }
-		}
-		//Botão Salvar (dados de uma nova criança)
-		private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
+            bool participacao = false;
+            crianca crianca = null;
+            
+            int cd = cbCriancas.SelectedIndex;
+            string roupa = txtRoupa.Text;
+            int sapato = (int)txtSapato.Value;
+            if (cbParticipacao.Checked) { participacao = true; }
+			sexo sexo = new sexo(cbSexo.SelectedIndex);
+            crianca = new crianca(cd + 1, criancas[cd].nome, roupa, sapato, dtNascimento.Value, participacao, sexo);
+			if (!crianca.Atualiza(txtCpf.Text, false)) { erro(); return; }
+        }
+        //Botão Salvar (dados de uma nova criança)
+        private void btnSalvarNovaCrianca_Click(object sender, EventArgs e)
 		{
 			int cd = criancas.Count;
 			string nome = txtNomeCrianca.Text;
@@ -195,6 +215,12 @@ namespace prjRecantoDaVovo.Forms
 			panelNovaCrianca.Visible = true;
 			panelCriancas.Visible = false;
 			cbGestando.Focus();
+			cbGestando.Checked = false;
+			txtNomeCrianca.Text = "";
+			txtRoupaCrianca.Text = "";
+			cbSexoCrianca.SelectedIndex = -1;
+			txtSapatoCrianca.Value = 0;
+			dtNascimentoCrianca.Value = DateTime.Now;
 			
 			crianca crianca = new crianca();
 			if (!crianca.Inserir(txtCpf.Text)) { erro(); return; }
@@ -202,16 +228,19 @@ namespace prjRecantoDaVovo.Forms
 		}
 		#endregion
 
+		#region Insere as crianças na ComboBox
 		private void InserirCrianca(int cd)
         {
 			int t = DateTime.Now.Year - criancas[cd].nascimento.Year;
 			string n = criancas[cd].nome;
 			if (n == null) { n = "Gestando Criança " + criancas.Count; t = 0; }
+			if (criancas[cd].nascimento.ToShortDateString() == "01/01/0001") { t = 0; }
 			cbCriancas.Items.Add(n + " - " + t + " anos");
 		}
+        #endregion
 
-		#region Da foco ao campo 'CPF do responsável' após carregar janela
-			private void frm_principal_Shown(object sender, EventArgs e)
+        #region Da foco ao campo 'CPF do responsável' após carregar janela
+        private void frm_principal_Shown(object sender, EventArgs e)
 			{
 				txtCpf.Focus();
 			}
@@ -269,10 +298,10 @@ namespace prjRecantoDaVovo.Forms
 			if (cbEditarInfoCriancas.Checked)
 			{
 				cbParticipacao.Enabled = true;
-				dtNascimento.Enabled = true;
+				if (criancas[cbCriancas.SelectedIndex].nascimento.ToShortDateString() == "01/01/0001") { dtNascimento.Enabled = true; }
 				txtSapato.Enabled = true;
 				txtRoupa.Enabled = true;
-				cbSexo.Enabled = true;
+				if (criancas[cbCriancas.SelectedIndex].sexo.nome == null) { cbSexo.Enabled = true; }
 				txtRoupa.Focus();
 			}
 			else
@@ -408,12 +437,14 @@ namespace prjRecantoDaVovo.Forms
 			{
 				txtRoupa.Text = criancas[cbCriancas.SelectedIndex].roupa;
 				txtSapato.Value = criancas[cbCriancas.SelectedIndex].sapato;
-				cbSexo.SelectedIndex = criancas[cbCriancas.SelectedIndex].sexo.codigo;
+				if (criancas[cbCriancas.SelectedIndex].sexo.codigo != 0 && criancas[cbCriancas.SelectedIndex].sexo.codigo != 1) { cbSexo.SelectedIndex = -1; }
+				else { cbSexo.SelectedIndex = criancas[cbCriancas.SelectedIndex].sexo.codigo; }
 				if (criancas[cbCriancas.SelectedIndex].nascimento.ToShortDateString() != "01/01/0001")
 				{
 					dtNascimento.Value = criancas[cbCriancas.SelectedIndex].nascimento;
 				}else { dtNascimento.Value = dtNascimento.MaxDate; }
 				cbEditarInfoCriancas.Enabled = true;
+				cbEditarInfoCriancas.Checked = false;
 				panelInfoCrianca.Visible = true;
 			}
 		#endregion
@@ -434,6 +465,8 @@ namespace prjRecantoDaVovo.Forms
 				{
 					cbSexoCrianca.Items.Add(sexos[i].nome);
 				}
+
+				dtNascimento.MaxDate = DateTime.Today;
 			}
 		#endregion
 
